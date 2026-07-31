@@ -68,9 +68,7 @@ VEHICLE_CSV_PATH = BASE_DIR / "Data" / "processed" / "vehicle_locations.csv"
 
 
 
-@st.cache_data
-def load_journeys(path):
-    return pd.read_parquet(path)
+
 
 
 try:
