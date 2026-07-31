@@ -1,0 +1,225 @@
+/* =====================================================
+   DESIGN SYSTEM — "Departure Board"
+   Subject: live bus operations, risk signalling, control-room data
+   Palette:
+     Ink Navy     #0B1F3A  (sidebar / board backgrounds)
+     Signal Amber #FFB300  (accent — bus-stop / hazard signage)
+     Slate BG     #EEF1F6  (page background)
+     Card White   #FFFFFF
+     Muted Slate  #5B6478  (secondary text)
+   Type:
+     Display  — Oswald (condensed, uppercase, transit signage)
+     Body     — Inter
+     Data     — Space Mono (departure-board digits)
+   Signature: the four summary metrics rendered as split-flap
+   departure-board tiles (top of every page).
+   ===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+
+:root{
+    --ink:#0B1F3A;
+    --ink-soft:#152A4A;
+    --amber:#FFB300;
+    --amber-dim:#FFD466;
+    --slate-bg:#EEF1F6;
+    --card:#FFFFFF;
+    --muted:#5B6478;
+    --border:#E1E6EF;
+}
+
+/* ---------- base ---------- */
+
+.stApp{
+    background-color:var(--slate-bg);
+}
+
+.block-container{
+    padding-top:1.6rem;
+    max-width:1200px;
+}
+
+html, body, [class*="css"]{
+    font-family:'Inter', sans-serif;
+    color:#1B2333;
+}
+
+/* ---------- headings ---------- */
+
+h1{
+    font-family:'Oswald', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    color:var(--ink);
+    font-weight:700;
+    border-bottom:3px solid var(--amber);
+    padding-bottom:10px;
+    display:inline-block;
+}
+
+h2, h3{
+    font-family:'Oswald', sans-serif;
+    color:var(--ink);
+    letter-spacing:0.4px;
+    font-weight:500;
+}
+
+.eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:13px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--amber);
+    background:var(--ink);
+    display:inline-block;
+    padding:4px 14px;
+    border-radius:4px;
+    margin-bottom:10px;
+}
+
+.page-title{
+    font-family:'Oswald', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    color:var(--ink);
+    font-size:40px;
+    font-weight:700;
+    text-align:center;
+    border-bottom:3px solid var(--amber);
+    display:inline-block;
+    padding-bottom:8px;
+    margin:0 auto;
+}
+
+.page-subtitle{
+    text-align:center;
+    color:var(--muted);
+    font-size:16px;
+    margin-top:14px;
+    font-family:'Inter', sans-serif;
+}
+
+.title-wrap{
+    text-align:center;
+    margin-bottom:6px;
+}
+
+/* ---------- departure-board metric tiles (signature element) ---------- */
+
+.board-row{
+    display:flex;
+    gap:14px;
+    margin:22px 0 8px 0;
+}
+
+.board-tile{
+    flex:1;
+    background:var(--ink);
+    background-image:linear-gradient(180deg, var(--ink-soft) 0%, var(--ink) 100%);
+    border-radius:10px;
+    padding:16px 18px;
+    box-shadow:0 6px 16px rgba(11,31,58,0.25);
+    border-bottom:3px solid var(--amber);
+}
+
+.board-tile .value{
+    font-family:'Space Mono', monospace;
+    font-size:30px;
+    font-weight:700;
+    color:var(--amber);
+    letter-spacing:1px;
+    line-height:1.1;
+}
+
+.board-tile .label{
+    font-family:'Inter', sans-serif;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.6px;
+    color:#B7C2D8;
+    margin-top:6px;
+}
+
+/* ---------- sidebar ---------- */
+
+section[data-testid="stSidebar"]{
+    background:var(--ink);
+}
+
+section[data-testid="stSidebar"] *{
+    color:#E7ECF5;
+}
+
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3{
+    color:var(--amber);
+    border:none;
+}
+
+section[data-testid="stSidebar"] .stRadio label{
+    font-family:'Inter', sans-serif;
+    font-size:15px;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stMarkdownContainer"] p{
+    color:#B7C2D8;
+    line-height:1.6;
+}
+
+/* ---------- metric containers (fallback, non-board metrics) ---------- */
+
+div[data-testid="metric-container"]{
+    background:var(--card);
+    border:1px solid var(--border);
+    padding:15px;
+    border-radius:10px;
+    box-shadow:0px 3px 8px rgba(11,31,58,0.06);
+}
+
+div[data-testid="metric-container"]:hover{
+    border-color:var(--amber);
+}
+
+/* ---------- buttons ---------- */
+
+.stButton>button{
+    background:var(--amber);
+    color:var(--ink);
+    font-weight:600;
+    border-radius:8px;
+    border:none;
+}
+
+.stButton>button:hover{
+    background:var(--amber-dim);
+    color:var(--ink);
+}
+
+/* ---------- charts / images ---------- */
+
+img{
+    border-radius:12px;
+}
+
+/* ---------- tables ---------- */
+
+[data-testid="stDataFrame"]{
+    border-radius:10px;
+    overflow:hidden;
+    border:1px solid var(--border);
+}
+
+/* ---------- dividers ---------- */
+
+hr{
+    border:none;
+    border-top:1px solid var(--border);
+    margin:22px 0;
+}
+
+/* ---------- info / warning / success boxes ---------- */
+
+div[data-testid="stAlert"]{
+    border-radius:10px;
+}
