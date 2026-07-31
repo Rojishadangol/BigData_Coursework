@@ -3,8 +3,7 @@ import os
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
+
 
 # =====================================================
 # PAGE CONFIGURATION
@@ -54,34 +53,24 @@ st.markdown("---")
 # PATHS
 # =====================================================
 
-PROJECT_PATH = r"D:\BigDataCoursework"
-PROCESSED_PATH = os.path.join(PROJECT_PATH, "Data", "processed", "integrated_journeys.parquet")
-RESULTS_PATH = os.path.join(PROJECT_PATH, "Data", "results")
-VEHICLE_MAP_PATH = os.path.join(PROJECT_PATH, "Data", "processed", "vehicle_map.html")
-VEHICLE_CSV_PATH = os.path.join(PROJECT_PATH, "Data", "processed", "vehicle_locations.csv")
+from pathlib import Path
+
+BASE_DIR = Path(__file__).parent
+
+PROCESSED_PATH = BASE_DIR / "Data" / "processed" / "integrated_journeys.parquet"
+RESULTS_PATH = BASE_DIR / "Data" / "results"
+VEHICLE_MAP_PATH = BASE_DIR / "Data" / "processed" / "vehicle_map.html"
+VEHICLE_CSV_PATH = BASE_DIR / "Data" / "processed" / "vehicle_locations.csv"
 
 
-# =====================================================
-# SPARK + DATA LOADING (cached so this doesn't rerun on every click)
-# =====================================================
 
-@st.cache_resource
-def get_spark():
-    spark = (
-        SparkSession.builder
-        .appName("Bus_Risk_Dashboard")
-        .master("local[*]")
-        .getOrCreate()
-    )
-    spark.sparkContext.setLogLevel("ERROR")
-    return spark
+
+
 
 
 @st.cache_data
 def load_journeys(path):
-    spark = get_spark()
-    df = spark.read.parquet(path)
-    return df.toPandas()
+    return pd.read_parquet(path)
 
 
 try:
