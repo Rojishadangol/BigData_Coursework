@@ -57,7 +57,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
 
-PROCESSED_PATH = BASE_DIR / "Data" / "processed" / "integrated_journeys.parquet"
+PROCESSED_PATH = BASE_DIR / "Data" / "processed" / "integrated_journeys_csv"
 RESULTS_PATH = BASE_DIR / "Data" / "results"
 VEHICLE_MAP_PATH = BASE_DIR / "Data" / "processed" / "vehicle_map.html"
 VEHICLE_CSV_PATH = BASE_DIR / "Data" / "processed" / "vehicle_locations.csv"
@@ -80,6 +80,19 @@ except Exception as e:
     st.error(f"Could not load journey dataset: {e}")
     st.stop()
 
+import glob
+
+@st.cache_data
+def load_journeys(folder):
+
+    csv_files = glob.glob(str(folder / "part-*.csv"))
+
+    if not csv_files:
+        raise FileNotFoundError(
+            f"No CSV files found in {folder}"
+        )
+
+    return pd.read_csv(csv_files[0])
 
 @st.cache_data
 def load_csv(path):
