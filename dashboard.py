@@ -65,19 +65,6 @@ VEHICLE_CSV_PATH = BASE_DIR / "Data" / "processed" / "vehicle_locations.csv"
 
 
 
-
-
-
-
-
-
-try:
-    eda_df = load_journeys(PROCESSED_PATH)
-    st.success("Integrated Bus Service Dataset Loaded Successfully (Timetable + Disruptions + Location)")
-except Exception as e:
-    st.error(f"Could not load journey dataset: {e}")
-    st.stop()
-
 import glob
 
 @st.cache_data
@@ -92,6 +79,16 @@ def load_journeys(folder):
 
     return pd.read_csv(csv_files[0])
 
+
+try:
+    eda_df = load_journeys(PROCESSED_PATH)
+    st.success(
+        "Integrated Bus Service Dataset Loaded Successfully (Timetable + Disruptions + Location)"
+    )
+except Exception as e:
+    st.error(f"Could not load journey dataset: {e}")
+    st.stop()
+    
 @st.cache_data
 def load_csv(path):
     return pd.read_csv(path)
